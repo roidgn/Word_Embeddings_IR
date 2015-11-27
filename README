@@ -1,0 +1,48 @@
+Deliverables:
+- - - - - - -
+
+* /src : contains the code for both tasks
+* /Results : output files from the analogy solver (e.g. ANALOGIES_dimension_model.txt)
+* /data : empty folder (you can paste here the files with vectors and the files from flickr8k dataset)
+* report.pdf
+
+Task 1 : Solving analogies
+- - - - - - - - - - - - - 
+
+- First, compile the java files
+
+javac *.java
+
+- Execution command
+
+java AnalogySolver -pathToVectors ../data/glove.6B.50d.txt -pathToQuestions ../data/questions_words.txt -printAnalogies
+
+Other possible parameters:
+-analogyModel cosAdd (default value) / pairDirection / cosMul
+-printAnalogies (if you want to print the analogies, predicted words and correct words) 
+
+java AnalogySolver -pathToVectors ../data/glove.6B.50d.txt -pathToQuestions ../data/questions_words.txt -analogyModel cosMul -printAnalogies
+
+Task 2 : From Sentences to Images
+- - - - - - - - - - - - - - - - -
+
+java ImageSearch -pathToTestFile ../data/Flickr_8k.testImages.txt -pathToSentences ../data/Flickr8k.lemma.token.txt
+
+Other possible parameters:
+-IRModel         ulm (Unigram Language Model - default) 
+		 vbma  (Additive Vector-Based Model)
+		 vbmm (Multiplicative Vector-Based Model)
+		 cmb (Compined model)
+		 all  (runs all previous models) 
+-pathToVectors   (not for 'ulm' model)
+-lamba_cmb           (parameter for compined model, double value [0..1], default = 0.5)
+-lamba_uml           (parameter for ilm model, double value [0..1], default = 0.5)
+-aggregationMethod    single / average  (default = single)
+-numCandidates      (integer value, default = 1 for Recall@1)
+-pathToTrainFile    path to train file (e.g. ./data/Flickr_8k.trainImages.txt)
+-pathToDevFile      path to dev file (e.g. ./data/Flickr_8k.devImages.txt)
+
+java ImageSearch -pathToTestFile ../data/Flickr_8k.testImages.txt -pathToSentences ../data/Flickr8k.lemma.token.txt -IRModel vbma -pathToVectors ../data/glove.6B.50d.txt -aggregationMethod average -numCandidates 5
+
+
+
